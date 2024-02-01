@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AddTaskProps } from "./type";
+import "./style.css";
 const AddTask = ({ tasks, setTasks }: AddTaskProps) => {
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
@@ -17,15 +18,16 @@ const AddTask = ({ tasks, setTasks }: AddTaskProps) => {
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => createTask(e)}>
+    <div className="task-form-container">
+      <form onSubmit={(e) => createTask(e)} className="task-form">
         <input
           type="text"
-          placeholder="enter task"
+          placeholder="Enter task"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className="task-input"
         />
-        <button>Add Task</button>
+        <button className="add-task-button">Add Task</button>
       </form>
     </div>
   );

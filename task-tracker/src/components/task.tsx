@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { TaskProp, task } from "./type";
+import "./style.css";
 
 const Task = ({ task, deleteTask, toggleCompleted, updateTask }: task) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -18,27 +19,47 @@ const Task = ({ task, deleteTask, toggleCompleted, updateTask }: task) => {
       description,
     };
     updateTask(task.id, editedTask);
+    setDescription("");
     setIsEdit(false);
   };
 
   useEffect(() => {}, [isEdit]);
   return (
-    <div>
-      <input type="checkbox" onClick={() => toggleCompleted(task.id)}></input>
-      {task.description}
-      <button onClick={() => setIsEdit(true)}>Edit</button>
+    <div className="task-item">
+      <div>
+        <span>
+          <input
+            type="checkbox"
+            onClick={() => toggleCompleted(task.id)}
+            className="checkbox-input"
+          />
+        </span>
+        <span
+          className={`task-description ${task.completed ? "completed" : ""}`}
+        >
+          {task.description}
+        </span>
+      </div>
+      {!isEdit && (
+        <button onClick={() => setIsEdit(true)} className="edit-button">
+          Edit
+        </button>
+      )}
       {isEdit && (
-        <form onSubmit={(e) => editTask(e, task)}>
+        <form onSubmit={(e) => editTask(e, task)} className="edit-form">
           <input
             type="text"
-            placeholder="enter task"
+            placeholder="Edit task"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className="edit-input"
           />
-          <button>UpdateTask</button>
+          <button className="update-button">Update Task</button>
         </form>
       )}
-      <button onClick={() => deleteTask(task.id)}>Delete</button>
+      <button onClick={() => deleteTask(task.id)} className="delete-button">
+        Delete
+      </button>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import AddTask from "./addTask";
 import Task from "./task";
 import { TaskProp } from "./type";
+import "./style.css";
 const Tasks = () => {
   const [tasks, setTasks] = useState<TaskProp[]>([]);
   const [completedTasks, setCompletedTasks] = useState<number>();
@@ -47,10 +48,10 @@ const Tasks = () => {
   }, [tasks]);
 
   return (
-    <div>
+    <div className="task-list-container">
       <AddTask tasks={tasks} setTasks={setTasks} />
       {tasks.map((task) => (
-        <div key={task.id}>
+        <div key={task.id} className="task-item-wrapper">
           <Task
             task={task}
             deleteTask={deleteTask}
@@ -59,8 +60,12 @@ const Tasks = () => {
           />
         </div>
       ))}
-      <h2>Completed Tasks</h2>
-      {completedTasks}/{tasks.length}
+      <div className="completed-tasks">
+        <h2>Completed Tasks</h2>
+        <span className="completed-task-count">
+          {completedTasks}/{tasks.length}
+        </span>
+      </div>
     </div>
   );
 };
